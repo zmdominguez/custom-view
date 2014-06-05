@@ -56,8 +56,7 @@ public class RequiredEditText extends EditText {
 		
 		manageRequiredField(required);
 		
-		invalidate();
-		requestLayout();
+		resetView();
 	}
 	
 	public void setRequired(boolean required) {
@@ -87,12 +86,35 @@ public class RequiredEditText extends EditText {
 		return mRequired;
 	}
 
+	/**
+	 * Set the error message to be shown during validation.
+	 * @param errorMessage
+	 */
+	public void setErrorMessage(String errorMessage) {
+		this.mErrorMessage = errorMessage;
+		
+		resetView();
+	}
+	
+
+	public String getErrorMessage() {
+		return mErrorMessage;
+	}
+	
+	/**
+	 * Invalidate and ask to re-draw.
+	 */
+	private void resetView() {
+		invalidate();
+		requestLayout();
+	}
+	
 	OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener() {
 
 		@Override
 		public void onFocusChange(View v, boolean hasFocus) {
 			if(!hasFocus && mRequired){
-				isRequiredFieldFilled();
+				isFieldFilled(true);
 			}
 		}
 	};
@@ -111,16 +133,28 @@ public class RequiredEditText extends EditText {
 		public void afterTextChanged(Editable s) { /* do nothing */ }			
 	};
 
-	private boolean isRequiredFieldFilled() {
-		if(TextUtils.isEmpty(getText().toString().trim())){
-			showRequiredErrorDrawable();
-			return false;
-		}
-		return true;
-	}
-
 	private void showRequiredErrorDrawable() {
 		setError(mErrorMessage);
+	}
+	
+	/**
+	 * Checks if this field is filled up. This method is useful during form validation.
+	 * 
+	 * <p>Iterate through the required fields, calling this method in turn.</p>
+	 * 
+	 * @param showError if this is true AND the field is required, the error message is shown.
+	 * Set the error message via {@link RequiredEditText#setMessage} or via XML.
+	 * @return
+	 */
+	public boolean isFieldFilled(boolean showError) {
+		if(TextUtils.isEmpty(getText().toString().trim())){
+			if(mRequired && showError) {
+				showRequiredErrorDrawable();
+			}
+			return false;
+		}
+		
+		return true;
 	}
 
 }
