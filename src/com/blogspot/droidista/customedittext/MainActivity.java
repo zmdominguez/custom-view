@@ -3,12 +3,10 @@ package com.blogspot.droidista.customedittext;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,8 +30,8 @@ public class MainActivity extends Activity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		
-		@InjectView(R.id.form_text_required) EditText mRequiredText;
-		@InjectView(R.id.form_text_not_required) EditText mNotRequiredText;
+		@InjectView(R.id.form_text_required) RequiredEditText mRequiredText;
+		@InjectView(R.id.form_text_not_required) RequiredEditText mNotRequiredText;
 		@InjectView(R.id.button_go) Button mGoButton;
 
 		public PlaceholderFragment() {
@@ -54,9 +52,8 @@ public class MainActivity extends Activity {
 		}
 
 		private void validateForm() {
-			boolean isFormValid = true;
 			
-			isFormValid = !TextUtils.isEmpty(mRequiredText.getText().toString());
+			boolean isFormValid = mRequiredText.isFieldFilled(true);
 			
 			if(!isFormValid) {
 				Toast.makeText(getActivity(), "Please fill up all required fields.", Toast.LENGTH_LONG).show();
