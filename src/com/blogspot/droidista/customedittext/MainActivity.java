@@ -45,6 +45,12 @@ public class MainActivity extends Activity {
 			ButterKnife.inject(this, rootView);
 			return rootView;
 		}
+
+		@Override
+		public void onDestroyView() {
+			super.onDestroyView();
+			ButterKnife.reset(this);
+		}
 		
 		@OnClick(R.id.button_go)
 		public void onClick(View view){
