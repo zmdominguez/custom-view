@@ -35,7 +35,7 @@ public class RequiredEditText extends EditText {
 
 		try {
 			setRequired(a.getBoolean(R.styleable.RequiredEditText_required, false), 
-					a.getString(R.styleable.RequiredEditText_errorMessage));
+					a.getString(R.styleable.RequiredEditText_error_message));
 		} finally {
 			//Don't forget this, we need to recycle
 			a.recycle();

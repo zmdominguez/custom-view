@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        app:errorMessage="@string/error_required"
+        app:error_message="@string/error_required"
         app:required="true" />
 
     <com.blogspot.droidista.customedittext.RequiredEditText
